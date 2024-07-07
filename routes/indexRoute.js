@@ -1,9 +1,15 @@
 const express = require("express");
 const router = express.Router();
 
-const {indexController,registerController} = require("../controllers/indexController");
+const {
+    indexController,
+    postIndexController,
+    registerController} = require("../controllers/indexController");
+
+const {redirectProfileMiddleware}=require("../middlewares/auth-middleware")
 
 
-router.get("/",indexController)
+router.get("/",redirectProfileMiddleware,indexController)
+router.post("/",postIndexController)
 
 module.exports=router;

@@ -1,7 +1,7 @@
 const mongoose=require("mongoose")
 const user = require("../../project-3-login/mongo-files/user")
 
-mongoose.connect("mongodb://127.0.0.1:27017/userlogin")
+
 
 const hisaabSchema=mongoose.Schema({
     title:{

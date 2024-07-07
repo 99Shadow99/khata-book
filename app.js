@@ -3,13 +3,15 @@ const app=express()
 const path=require("path")
 
 
+const db =require("./config/mongoose-connection")
 const indexRouter = require('./routes/indexRoute');
 const registerRouter=require("./routes/registerRouter")
-const loginRouter=require("./routes/loginRouter")
-const db =require("./config/mongoose-connection")
+const profileRouter=require("./routes/profileRoute")
+const createRoute=require("./routes/createRoute.js")
+
 const cookieParser=require('cookie-parser')
 const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
+
 
 
 
@@ -24,8 +26,8 @@ app.use(cookieParser())
 
 app.use('/', indexRouter);
 app.use('/register', registerRouter);
-app.use('/login', loginRouter);
-
+app.use("/profile",profileRouter)
+app.use("/profile/create",createRoute)
 
 
 app.listen(process.env.PORT || 3000)

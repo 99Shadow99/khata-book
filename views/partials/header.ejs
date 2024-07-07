@@ -18,9 +18,16 @@
                 some error
             </h3>
         </div>
-        <div class="links flex gap-4">
-            <a href="/">Home</a>
-            <a href="/create">Create new hisaab</a>
-            <a class="text-red-500" href="/logout">Logout</a>
-        </div>
+
+<% var loggin = loggin===undefined? true : false %>
+<% if (loggin) { %>
+    <div class="links flex gap-4">
+        <a href="/">Home</a>
+        <a href="/profile/create">Create new hisaab</a>
+        <a class="text-red-500" href="/logout">Logout</a>
+    </div>
+<% } else { %>
+  
+<% } %>
+       
     </div>
