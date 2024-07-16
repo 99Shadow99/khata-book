@@ -45,7 +45,7 @@ if(decode){
        email:decode.email
       })
 req.user=user;
-   console.log(user)
+   
    
     next()
 

@@ -8,6 +8,9 @@ const indexRouter = require('./routes/indexRoute');
 const registerRouter=require("./routes/registerRouter")
 const profileRouter=require("./routes/profileRoute")
 const createRoute=require("./routes/createRoute.js")
+var session = require('express-session')
+const flash=require("connect-flash")
+
 
 const cookieParser=require('cookie-parser')
 const bcrypt = require('bcrypt');
@@ -21,6 +24,12 @@ app.use(express.static(path.join(__dirname,"public")))
 app.use(express.json())
 app.use(express.urlencoded({extended:true}))
 app.use(cookieParser())
+app.use(session({
+    secret: 'keyboard cat',
+    resave: false,
+    saveUninitialized: false,
+  }) )
+app.use(flash())
 
 
 

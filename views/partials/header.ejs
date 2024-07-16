@@ -13,12 +13,17 @@
 <body>
     <div class="navbar flex justify-between w-full px-20 py-10">
         <h3>Khaatabook</h3>
-        <div class="absolute hidden top-10 left-1/2 -translate-x-1/2 -translate-y-1/2 px-3 py-2 bg-red-500 rounded-md">
-            <h3 class="text-red-200">
-                some error
+        <!-- <%var error=err!=null?true:false %> -->
+        <% var err=err===undefined?false:err%>
+         <% var error=err.length%>
+        <%if (error>0?true:false){%>
+        <div class="absolute top-10 left-1/2 -translate-x-1/2 -translate-y-1/2 px-3 py-2 bg-red-500 rounded-md">
+            <h3 class="text-red-200 ">
+                <%=err%>
             </h3>
         </div>
-
+       <%}%>
+       
 <% var loggin = loggin===undefined? true : false %>
 <% if (loggin) { %>
     <div class="links flex gap-4">

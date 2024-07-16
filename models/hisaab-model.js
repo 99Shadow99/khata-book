@@ -30,7 +30,7 @@ const hisaabSchema=mongoose.Schema({
         type:Boolean,
         default:false,
     },
-    passcode:{type:Boolean,
+    passcode:{type:String,
         default:"",
     },
     editPerimission:{type:Boolean,

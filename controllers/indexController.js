@@ -6,7 +6,9 @@ const hisaabModel=require("../models/hisaab-model")
 
 
 module.exports.indexController=function(req,res){
-    res.render("index",{loggin:false});
+    let p=req.flash("err")
+  
+    res.render("index",{loggin:false,err:p});
 }
 
 module.exports.postIndexController= async function(req,res){
@@ -23,6 +25,7 @@ if(decode){
     res.redirect("/profile")
 }
 else{
+    req.flash("err","password is wrong ")
     res.redirect("/")
 }
 
@@ -37,7 +40,6 @@ res.send("err")
 }
 
 }
-
 
 module.exports.registerController=function(req,res){
     res.render("register");
@@ -76,7 +78,20 @@ catch(err){
 }
 
 module.exports.profileController=async function(req,res){
-   const p= await req.user.populate("hisaab");
+let byDate=Number(req.query.byDate)
+let{startDate,endDate} =req.query
+
+byDate=byDate?byDate:-1
+startDate= startDate?startDate:new Date("1940-01-01")
+endDate= endDate?endDate:new Date()
+
+
+ await req.user.populate({
+path:"hisaab",
+match:{createdAt:{$gte:startDate, $lte:endDate}},
+options: {sort: { createdAt:byDate}},
+ });
+
 
     res.render("profile",{user:req.user});
 }
@@ -92,7 +107,7 @@ try{
 encrypted= encrypted==="on"?true:false;
 shareable= shareable==="on"?true:false;
 editPerimission= editPerimission==="on"?true:false;
-passcode= passcode==="on"?true:false;
+// passcode= passcode==="on"?true:false;
 let hisaab =await hisaabModel.create({
     user:req.user._id,
     title,
@@ -103,6 +118,7 @@ let hisaab =await hisaabModel.create({
     editPerimission
    })
 const user= await userModel.findOne({ _id:req.user._id,})
+
 await user.hisaab.push(hisaab._id)
 user.save();
 res.redirect("/profile")
@@ -111,3 +127,58 @@ catch(err){
     res.send(err)
 }
 }
+
+
+  module.exports.verifyHisaabController= async function(req,res){
+let hisaab=req.params.id
+   hisaab=await hisaabModel.findOne({_id:hisaab})
+
+let passcode =hisaab.passcode?true:false;
+if(passcode) return res.render("passcode",{id:req.params.id})
+res.redirect(`/profile/hisaab/view/${req.params.id}`);
+ }
+ 
+ module.exports.postVerifyHisaabController= async function(req,res){
+  let hisaab= req.params.id
+  hisaab=await hisaabModel.findOne({_id:hisaab})
+  
+ if (req.body.passcode===hisaab.passcode)return res.redirect(`/profile/hisaab/view/${req.params.id}`)
+   res.redirect("/profile")
+ }
+
+
+module.exports.hisaabController= async function(req,res){
+    try{
+  let hisaab=await  hisaabModel.findOne({_id:req.params.hissab_id}) 
+    res.render("hisaab",{hisaab})
+    }
+    catch(err){
+        res.send(err)
+    }
+
+ }
+ 
+ module.exports.deleteHisaabController= async function(req,res){
+    try{
+const id=req.params.hissab_id
+let hisaab=await hisaabModel.findOneAndDelete({
+_id:id
+})
+
+res.send(hisaab)
+    }
+    catch(err){
+        res.send("err")
+    }
+
+ }
+ module.exports.editHisaabController= async function(req,res){
+    let hisaab=req.params.id
+
+   hisaab=await hisaabModel.findOne({_id:hisaab})
+res.render("edit",{hisaab})
+
+ }
+ module.exports.postEditHisaabController= async function(req,res){
+    res.send("ko")
+ }

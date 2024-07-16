@@ -13,14 +13,13 @@
                 <button class="sharebtn text-gray-700 px-4 py-2 rounded flex items-center space-x-2">
                     <span>Share as a link</span>
                 </button>
-                <a href="/hisaab/delete" class="bg-red-500 text-white px-4 py-2 rounded">Delete</a>
-                <a href="/hisaab/edit" class="bg-yellow-400 text-white px-4 py-2 rounded">Edit</a>
+                <a href="/profile/hisaab/delete/<%=hisaab._id%>" class="bg-red-500 text-white px-4 py-2 rounded">Delete</a>
+                <a href="/profile/hisaab/edit/<%=hisaab._id%>" class="bg-yellow-400 text-white px-4 py-2 rounded">Edit</a>
             </div>
         </div>
         <div class="text-gray-500 mb-4">Created on 12-07-2024</div>
-        <h2 class="text-xl font-semibold mb-2">Ghar ke khaane ka hisaab</h2>
-        <p class="text-gray-700">Chacha ko diye they paise 1200 rupay<br>
-            1100 waapas miley 10 taareekh ko.</p>
+        <h2 class="text-xl font-semibold mb-2"><%= hisaab.title%></h2>
+        <p class="text-gray-700"><%= hisaab.description%></p>
     </div>
 
 
